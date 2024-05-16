@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative; /* Add this line */
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #outputImage {
+            display: none;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        /* Style for terms and agreement pop-up */
+        #termsPopup {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 9999;
+        }
+        #termsPopup h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #termsPopup p {
+            margin-bottom: 20px;
+        }
+        #termsPopup button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #termsPopup button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>User Information Form</h2>
+        <form id="userInfoForm">
+            <!-- Input fields for user information -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="id">ID Number:</label>
+            <input type="text" id="id" name="id" required>
+
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" name="contact" required>
+
+            <!-- Submit button with onclick event -->
+            <input type="submit" value="Submit" onclick="validateForm(); return false;">
+        </form>
+
+        <!-- Terms and Agreement Popup -->
+        <div id="termsPopup">
+            <h3>Terms and Agreement</h3>
+            <p>By clicking submit, you agree that all the information provided is accurate.</p>
+            <button onclick="submitForm()">Agree and Submit</button>
+        </div>
+
+        <!-- Output image -->
+        <img id="outputImage" src="img/qr_sample.png" alt="qr_sample.png">
+    </div>
+
+    <script>
+        // JavaScript code
+        function validateForm() {
+            var id = document.getElementById("id").value;
+            var contact = document.getElementById("contact").value;
+
+            // Validate ID
+            if (!validateId(id)) {
+                return false;
+            }
+
+            // Validate Contact Number
+            if (!validateContact(contact)) {
+                return false;
+            }
+
+            // If everything is valid, show the terms and agreement pop-up
+            showTermsAndAgreement();
+        }
+
+        function validateId(id) {
+            // Check if the ID starts with "TUPC" and follows the format "TUPC-##-####"
+            if (!id.match(/^TUPC-\d{2}-\d{4}$/)) {
+                alert("Invalid user ID. Please follow the format: TUPC-##-####");
+                return false;
+            }
+            return true;
+        }
+
+        function validateContact(contact) {
+            // Check if the contact number starts with "09" and is 11 digits long
+            if (!contact.match(/^09\d{9}$/)) {
+                alert("Invalid contact number. Please start with '09' and ensure it is 11 digits long.");
+                return false;
+            }
+            return true;
+        }
+
+        function showTermsAndAgreement() {
+            // Display the terms and agreement pop-up
+            document.getElementById("termsPopup").style.display = "block";
+        }
+
+        function submitForm() {
+            // Submit the form
+            document.getElementById("userInfoForm").submit();
+        }
+    </script>
+</body>
+</html>
